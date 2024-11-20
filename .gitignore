@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /StudentManagement/appsettings.json
+/StudentManagement/appsettings.Development.json
+/StudentManagement/appsettings.Development.json
