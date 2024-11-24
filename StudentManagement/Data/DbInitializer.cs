@@ -14,8 +14,9 @@ public static class DbInitializer
 
         var students = new Student[]
         {
-            new Student { Name = "John Doe", Grade = 1 },
-            new Student { Name = "Jane Smith", Grade = 2 }
+            new Student { Name = "John Doe",StudentNumber = 411212345 ,Grade = 2 ,Class = null ,Gender = null ,Nationality = null},
+            new Student { Name = "Jane Smith",StudentNumber = 411056789, Grade = 4 ,Class = null ,Gender = null ,Nationality = null},
+            new Student { Name = "Jane Smith",StudentNumber = 411175364, Grade = 4 ,Class = null ,Gender = null ,Nationality = null},
         };
         context.Students.AddRange(students);
         context.SaveChanges();
