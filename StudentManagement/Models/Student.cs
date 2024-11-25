@@ -7,8 +7,8 @@
         public int? StudentNumber { get; set; }
         public int? Grade { get; set; }
         public char? Class { get; set; }
-        public char? Gender { get; set; }
-        public char? Nationality { get; set; }
+        public string? Gender { get; set; }
+        public string? Nationality { get; set; }
         // 添加更多屬性，如 Email、Phone 等
     }
 }
