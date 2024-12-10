@@ -8,9 +8,9 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["<YourProjectName>.csproj", "./"]
-RUN dotnet restore "./<YourProjectName>.csproj"
+RUN dotnet restore "./StudentManagement.csproj"
 COPY . .
-RUN dotnet publish "./<YourProjectName>.csproj" -c Release -o /app/publish
+RUN dotnet publish "./StudentManagement.csproj" -c Release -o /app/publish
 
 # 將構建好的應用程式部署到執行環境
 FROM base AS final
