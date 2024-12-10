@@ -7,7 +7,7 @@ EXPOSE 443
 # 使用官方的 .NET SDK 鏡像作為構建環境
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["<YourProjectName>.csproj", "./"]
+COPY ["StudentManagement.csproj", "./"]
 RUN dotnet restore "./StudentManagement.csproj"
 COPY . .
 RUN dotnet publish "./StudentManagement.csproj" -c Release -o /app/publish
