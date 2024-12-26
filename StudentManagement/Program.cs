@@ -1,8 +1,9 @@
-using Microsoft.AspNetCore.Identity;
+
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.Data;
 using System;
 using Microsoft.Data.SqlClient;
+using StudentManagement.Models;
 
 namespace StudentManagement
 {
@@ -23,9 +24,6 @@ namespace StudentManagement
                     sqlOptions.EnableRetryOnFailure()));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            //®≠§¿≈Á√“
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -47,12 +45,9 @@ namespace StudentManagement
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-            app.MapRazorPages();
 
             using (var scope = app.Services.CreateScope())
             {
