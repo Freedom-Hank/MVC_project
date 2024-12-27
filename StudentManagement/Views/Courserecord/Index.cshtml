@@ -23,18 +23,18 @@
 
     <div class="content">
         <div class="left-panel">
-            <form>
+            <form asp-action="GetCourseInfo" method="post">
                 <div class="row mb-3">
                     <label for="course-code" class=" col-form-label">課程代碼</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" id="course-code" name="course-code">
+                        <input type="text" class="form-control" id="courseId" name="courseId">
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <label for="score" class="col-form-label">成績</label>
                     <div class="col-sm-3">
-                        <input type="number" class="form-control" id="score" name="score">
+                        <input type="number" class="form-control" id="grade" name="grade">
                     </div>
                 </div>
 
@@ -72,10 +72,10 @@
                     <!-- Example rows -->
                     <tr>
                         <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>@ViewBag.CourseId</td>
+                        <td>@ViewBag.CourseName</td>
+                        <td>@ViewBag.Grade</td>
+                        <td>@ViewBag.Status</td>
                         <td>
                             <button class="edit-button">修改</button>
                             <button class="delete-button">刪除</button>
@@ -83,15 +83,21 @@
                     </tr>
                     <tr>
                         <td>2</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>@ViewBag.CourseId</td>
+                        <td>@ViewBag.CourseName</td>
+                        <td>@ViewBag.Grade</td>
+                        <td>@ViewBag.Status</td>
                         <td>
                             <button class="edit-button">修改</button>
                             <button class="delete-button">刪除</button>
                         </td>
                     </tr>
+                    @if (ViewBag.ErrorMessage != null)
+        {
+            <tr>
+                <td colspan="6" class="text-center text-danger">@ViewBag.ErrorMessage</td>
+            </tr>
+        }
                 </tbody>
             </table>
         </div>

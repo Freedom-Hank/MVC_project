@@ -1,4 +1,5 @@
-﻿namespace StudentManagement.Models
+﻿
+namespace StudentManagement.Models
 {
     public class CourseRegistration
     {
@@ -12,5 +13,9 @@
         public string Location { get; set; }
         public string Semester { get; set; }
 
+        public static implicit operator string(CourseRegistration v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
