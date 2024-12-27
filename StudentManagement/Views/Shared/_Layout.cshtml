@@ -35,21 +35,21 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav">
-                        @if (HttpContextAccessor.HttpContext.Session.GetString("StudentId") != null)
+                        @if (HttpContextAccessor.HttpContext.Session.GetString("StudentName") != null)
                         {
                             <li class="nav-item">
                                 <span class="nav-link">Hello, @HttpContextAccessor.HttpContext.Session.GetString("StudentName")!</span>
                             </li>
                             <li class="nav-item">
                                 <form method="post" action="/Account/Logout">
-                                    <button type="submit" class="btn btn-link nav-link">Logout</button>
+                                    <button type="submit" class="btn btn-link nav-link">登出</button>
                                 </form>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Account/Login">Login</a>
+                                <a class="nav-link text-dark" href="/Account/Login">登入</a>
                             </li>
                         }
                     </ul>
