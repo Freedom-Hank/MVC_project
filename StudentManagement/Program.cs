@@ -1,4 +1,4 @@
-
+﻿
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.Data;
 using System;
@@ -13,12 +13,21 @@ namespace StudentManagement
         {
             var builder = WebApplication.CreateBuilder(args);
 
-
-
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-            // �]�w��Ʈw���e�M�����޿�
+            builder.Services.AddDistributedMemoryCache(); // 註冊內存分佈式緩存
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30); // Session 的有效期限
+                options.Cookie.HttpOnly = true; // 避免 JavaScript 存取
+                options.Cookie.IsEssential = true; // 必要的 Cookie
+            });
+
+            builder.Services.AddHttpContextAccessor(); // 注册 IHttpContextAccessor 服務
+
+
+            // 設定資料庫內容和重試邏輯
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(connectionString, sqlOptions =>
                     sqlOptions.EnableRetryOnFailure()));
@@ -44,6 +53,7 @@ namespace StudentManagement
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession(); // 啟用 Session
 
             app.MapControllerRoute(
                 name: "default",

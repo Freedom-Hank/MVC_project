@@ -1,0 +1,36 @@
+﻿@model StudentManagement.Models.LoginViewModel
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+
+<form asp-action="Login" method="post">
+    <div class="form-group">
+        <label for="studentNumber">Student Number</label>
+        <input asp-for="StudentNumber" class="form-control" />
+        <span asp-validation-for="StudentNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input asp-for="Password" type="password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe" />
+        <label class="form-check-label" for="rememberMe">Remember Me</label>
+    </div>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <p class="text-danger">@ViewBag.ErrorMessage</p>
+    }
+    <button type="submit" class="btn btn-primary">Login</button>
+    <a href="/Account/ForgotPassword" class="btn btn-link">Forgot Password?</a>
+</form>

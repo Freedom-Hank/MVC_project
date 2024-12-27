@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.Data;
 using StudentManagement.Models;
+using BCrypt.Net;
 
 namespace StudentManagement.Controllers
 {
@@ -50,20 +51,27 @@ namespace StudentManagement.Controllers
         }
 
         // POST: Students/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StudentId,Name,StudentNumber,Grade,Class,Gender,Nationality")] Student student)
+        [HttpPost]
+        public IActionResult Create(Student student)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(student);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // 若 Password 為空，則預設為 StudentNumber
+                if (string.IsNullOrEmpty(student.Password))
+                {
+                    student.Password = student.StudentNumber.ToString;
+                }
+
+                _context.Students.Add(student);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
             }
+
             return View(student);
         }
+
 
         // GET: Students/Edit/5
         public async Task<IActionResult> Edit(int? id)
