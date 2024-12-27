@@ -1,4 +1,6 @@
-﻿@{
+﻿@model CourseRecordViewModel
+
+@{
     ViewData["Title"] = "修課記錄管理";
 }
 
@@ -6,58 +8,32 @@
     <h1>@ViewData["Title"]</h1>
 </div>
 
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>修課紀錄管理</title>   
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="header">
-        <div class="user-info">
-
-        </div>
-    </div>
-
-    <div class="content">
-        <div class="left-panel">
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
             <form asp-action="GetCourseInfo" method="post">
-                <div class="row mb-3">
-                    <label for="course-code" class=" col-form-label">課程代碼</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" id="courseId" name="courseId">
-                    </div>
+                <div class="mb-3">
+                    <label for="courseId" class="form-label">課程代碼</label>
+                    <input type="text" class="form-control" id="courseId" name="courseId" required>
                 </div>
-
-                <div class="row mb-3">
-                    <label for="score" class="col-form-label">成績</label>
-                    <div class="col-sm-3">
-                        <input type="number" class="form-control" id="grade" name="grade">
-                    </div>
+                <div class="mb-3">
+                    <label for="grade" class="form-label">成績</label>
+                    <input type="number" class="form-control" id="grade" name="grade" required>
                 </div>
-
-                <div class="status">
-                    <label>
-                        <input type="radio" name="status" value="進修中">
-                        進修中
-                    </label>
-                    <label>
-                        <input type="radio" name="status" value="已修課">
-                        已修課
-                    </label>
+                <div class="mb-3">
+                    <label class="form-label">修課狀態</label><br />
+                    <input type="radio" id="statusInProgress" name="status" value="進修中" required>
+                    <label for="statusInProgress">進修中</label><br />
+                    <input type="radio" id="statusCompleted" name="status" value="已修課">
+                    <label for="statusCompleted">已修課</label>
                 </div>
-
-                <div class="buttons">
-                    <button type="button" class="back-button">返回</button>
-                    <button type="submit" class="add-button">加入</button>
-                </div>
+                <button type="submit" class="btn btn-primary">加入</button>
+                <a href="/" class="btn btn-secondary">返回</a>
             </form>
         </div>
 
-        <div class="right-panel position-absolute bottom-50 start-50 translate-middle-20">
-            <table class="table table-success table-striped">
+        <div class="col-md-8">
+            <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>記錄編號</th>
@@ -69,33 +45,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Example rows -->
-                    <!--<tr>
-                        <td>1</td>
-                        <td>@ViewBag.CourseId</td>
-                        <td>@ViewBag.CourseName</td>
-                        <td>@ViewBag.Grade</td>
-                        <td>@ViewBag.Status</td>
-                        <td>
-                            <button class="edit-button">修改</button>
-                            <button class="delete-button">刪除</button>
-                        </td>
-                    </tr>-->
-                    <!--<tr>
-                        <td>2</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <button class="edit-button">修改</button>
-                            <button class="delete-button">刪除</button>
-                        </td>
-                    </tr>-->
-                    @if (ViewBag.CourseRecords != null)
+                    @if (Model.CourseRecords.Any())
                     {
                         int counter = 1;
-                        foreach (var record in ViewBag.CourseRecords)
+                        foreach (var record in Model.CourseRecords)
                         {
                             <tr>
                                 <td>@counter</td>
@@ -104,22 +57,31 @@
                                 <td>@record.Grade</td>
                                 <td>@record.Status</td>
                                 <td>
-                                    <button class="edit-button">修改</button>
-                                    <button class="delete-button">刪除</button>
+                                    <a href="/Courserecord/Edit/@record.Id" class="btn btn-primary">修改</a>
+                                    <form method="post" action="/Courserecord/Delete" style="display:inline;">
+                                        <input type="hidden" name="id" value="@record.Id" />
+                                        <button type="submit" class="btn btn-danger">刪除</button>
+                                    </form>
                                 </td>
                             </tr>
                             counter++;
                         }
                     }
-                    @if (ViewBag.ErrorMessage != null)
-        {
-            <tr>
-                <td colspan="6" class="text-center text-danger">@ViewBag.ErrorMessage</td>
-            </tr>
-        }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">目前沒有修課記錄。</td>
+                        </tr>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-danger">@Model.ErrorMessage</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
     </div>
-</body>
-</html>
+</div>

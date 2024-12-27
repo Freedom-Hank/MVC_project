@@ -2,9 +2,11 @@
 {
     public class CourseRecord
     {
-        public int CourseRecordId { get; set; }
+        public int Id { get; set; }
+        public string CourseId { get; set; }
         public string CourseName { get; set; }
-        public int Credits { get; set; }
-        // 添加更多屬性，如成績、課程狀態等
+        public string Grade { get; set; }
+        public string Status { get; set; }
     }
+
 }
