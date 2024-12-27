@@ -3,7 +3,7 @@ namespace StudentManagement.Models
 {
     public class CourseRegistration
     {
-        public int CourseId { get; set; }
+        public string CourseId { get; set; }
         public string Class { get; set; }
         public string Category { get; set; }
         public string Name { get; set; }
