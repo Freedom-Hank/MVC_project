@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using StudentManagement.Models;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace StudentManagement.Controllers
 {
@@ -12,6 +14,9 @@ namespace StudentManagement.Controllers
         {
             _configuration = configuration;
         }
+
+        // Session 鍵值，用於保存課程記錄
+        private const string SessionKeyCourseRecords = "CourseRecords";
 
         [HttpPost]
         public async Task<IActionResult> GetCourseInfo(string courseId, string grade, string status)
@@ -50,14 +55,26 @@ namespace StudentManagement.Controllers
                 return View("Index", model);
             }
 
-            // 將查詢結果新增到 model
-            model.CourseRecords.Add(new CourseRecord
+            // 創建新的課程記錄
+            var newRecord = new CourseRecord
             {
                 CourseId = courseId,
                 CourseName = courseName,
                 Grade = grade,
                 Status = status == "已修課" ? "已修課" : "進修中"
-            });
+            };
+
+            // 從 Session 中取得現有的課程記錄，並初始化為空列表
+            var courseRecords = HttpContext.Session.GetObjectFromJson<List<CourseRecord>>(SessionKeyCourseRecords) ?? new List<CourseRecord>();
+
+            // 新的課程記錄加入到列表中
+            courseRecords.Add(newRecord);
+
+            // 保存更新後的課程記錄回 Session
+            HttpContext.Session.SetObjectAsJson(SessionKeyCourseRecords, courseRecords);
+
+            // 返回顯示課程記錄的頁面
+            model.CourseRecords = courseRecords;
 
             return View("Index", model);
         }
@@ -65,7 +82,12 @@ namespace StudentManagement.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var model = new CourseRecordViewModel();
+            var model = new CourseRecordViewModel
+            {
+                // 從 Session 中加載課程記錄
+                CourseRecords = HttpContext.Session.GetObjectFromJson<List<CourseRecord>>(SessionKeyCourseRecords) ?? new List<CourseRecord>()
+            };
+
             return View(model);
         }
     }
