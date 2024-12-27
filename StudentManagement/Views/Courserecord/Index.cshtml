@@ -70,7 +70,7 @@
                 </thead>
                 <tbody>
                     <!-- Example rows -->
-                    <tr>
+                    <!--<tr>
                         <td>1</td>
                         <td>@ViewBag.CourseId</td>
                         <td>@ViewBag.CourseName</td>
@@ -80,18 +80,37 @@
                             <button class="edit-button">修改</button>
                             <button class="delete-button">刪除</button>
                         </td>
-                    </tr>
-                    <tr>
+                    </tr>-->
+                    <!--<tr>
                         <td>2</td>
-                        <td>@ViewBag.CourseId</td>
-                        <td>@ViewBag.CourseName</td>
-                        <td>@ViewBag.Grade</td>
-                        <td>@ViewBag.Status</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td>
                             <button class="edit-button">修改</button>
                             <button class="delete-button">刪除</button>
                         </td>
-                    </tr>
+                    </tr>-->
+                    @if (ViewBag.CourseRecords != null)
+                    {
+                        int counter = 1;
+                        foreach (var record in ViewBag.CourseRecords)
+                        {
+                            <tr>
+                                <td>@counter</td>
+                                <td>@record.CourseId</td>
+                                <td>@record.CourseName</td>
+                                <td>@record.Grade</td>
+                                <td>@record.Status</td>
+                                <td>
+                                    <button class="edit-button">修改</button>
+                                    <button class="delete-button">刪除</button>
+                                </td>
+                            </tr>
+                            counter++;
+                        }
+                    }
                     @if (ViewBag.ErrorMessage != null)
         {
             <tr>
