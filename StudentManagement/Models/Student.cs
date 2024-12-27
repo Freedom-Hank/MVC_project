@@ -3,12 +3,19 @@
     public class Student
     {
         public int StudentId { get; set; }
-        public string Name { get; set; }
-        public int? StudentNumber { get; set; }
+        public required string Name { get; set; }
+        public string? StudentNumber { get; set; }
         public int? Grade { get; set; }
         public char? Class { get; set; }
         public string? Gender { get; set; }
         public string? Nationality { get; set; }
-        // 添加更多屬性，如 Email、Phone 等
+
+        private string _password;
+
+        public required string Password
+        {
+            get => _password ?? StudentNumber ?? string.Empty;
+            set => _password = value ?? StudentNumber ?? string.Empty;
+        }
     }
 }

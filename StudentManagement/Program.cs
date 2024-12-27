@@ -1,8 +1,9 @@
-using Microsoft.AspNetCore.Identity;
+ï»¿
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.Data;
 using System;
 using Microsoft.Data.SqlClient;
+using StudentManagement.Models;
 
 namespace StudentManagement
 {
@@ -12,20 +13,26 @@ namespace StudentManagement
         {
             var builder = WebApplication.CreateBuilder(args);
 
-
-
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-            // ³]©w¸ê®Æ®w¤º®e©M­«¸ÕÅŞ¿è
+            builder.Services.AddDistributedMemoryCache(); // è¨»å†Šå…§å­˜åˆ†ä½ˆå¼ç·©å­˜
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30); // Session çš„æœ‰æ•ˆæœŸé™
+                options.Cookie.HttpOnly = true; // é¿å… JavaScript å­˜å–
+                options.Cookie.IsEssential = true; // å¿…è¦çš„ Cookie
+            });
+
+            builder.Services.AddHttpContextAccessor(); // æ³¨å†Œ IHttpContextAccessor æœå‹™
+
+
+            // è¨­å®šè³‡æ–™åº«å…§å®¹å’Œé‡è©¦é‚è¼¯
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(connectionString, sqlOptions =>
                     sqlOptions.EnableRetryOnFailure()));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            //¨­¤ÀÅçÃÒ
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -46,13 +53,11 @@ namespace StudentManagement
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthorization();
+            app.UseSession(); // å•Ÿç”¨ Session
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-            app.MapRazorPages();
 
             using (var scope = app.Services.CreateScope())
             {
