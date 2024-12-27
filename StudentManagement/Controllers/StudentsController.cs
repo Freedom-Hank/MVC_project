@@ -51,8 +51,6 @@ namespace StudentManagement.Controllers
         }
 
         // POST: Students/Create
-
-        [HttpPost]
         [HttpPost]
         public IActionResult Create(Student student)
         {
@@ -61,7 +59,7 @@ namespace StudentManagement.Controllers
                 // 若 Password 為空，則預設為 StudentNumber
                 if (string.IsNullOrEmpty(student.Password))
                 {
-                    student.Password = student.StudentNumber.ToString;
+                    student.Password = student.StudentNumber;
                 }
 
                 _context.Students.Add(student);

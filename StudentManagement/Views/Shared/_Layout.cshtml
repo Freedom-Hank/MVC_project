@@ -38,6 +38,9 @@
                         @if (HttpContextAccessor.HttpContext.Session.GetString("StudentId") != null)
                         {
                             <li class="nav-item">
+                                <span class="nav-link">Hello, @HttpContextAccessor.HttpContext.Session.GetString("StudentName")!</span>
+                            </li>
+                            <li class="nav-item">
                                 <form method="post" action="/Account/Logout">
                                     <button type="submit" class="btn btn-link nav-link">Logout</button>
                                 </form>
