@@ -1,0 +1,28 @@
+﻿@model CourseRecord
+
+<div class="container">
+    <h1>修改修課記錄</h1>
+    <form asp-action="Edit" method="post">
+        <div class="mb-3">
+            <label for="CourseId" class="form-label">課程代碼</label>
+            <input type="text" class="form-control" id="CourseId" name="CourseId" value="@Model.CourseId" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="CourseName" class="form-label">課程名稱</label>
+            <input type="text" class="form-control" id="CourseName" name="CourseName" value="@Model.CourseName" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="Grade" class="form-label">成績</label>
+            <input type="number" class="form-control" id="Grade" name="Grade" value="@Model.Grade" required>
+        </div>
+        <div class="mb-3">
+            <label for="Status" class="form-label">修課狀態</label>
+            <select class="form-select" id="Status" name="Status">
+                <option value="已修課" @(Model.Status == "已修課" ? "selected" : "")>已修課</option>
+                <option value="進修中" @(Model.Status == "進修中" ? "selected" : "")>進修中</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">保存</button>
+        <a href="/Courserecord/Index" class="btn btn-secondary">取消</a>
+    </form>
+</div>
