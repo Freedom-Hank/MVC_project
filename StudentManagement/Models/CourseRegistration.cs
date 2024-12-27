@@ -1,8 +1,11 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 namespace StudentManagement.Models
 {
     public class CourseRegistration
     {
+        [Key]
         public string CourseId { get; set; }
         public string Class { get; set; }
         public string Category { get; set; }
