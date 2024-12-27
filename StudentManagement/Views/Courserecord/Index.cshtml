@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "修課記錄管理";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="height: 20vh;">
+    <h1>@ViewData["Title"]</h1>
+</div>
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修課紀錄管理</title>   
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <div class="user-info">
+
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="left-panel">
+            <form>
+                <div class="row mb-3">
+                    <label for="course-code" class=" col-form-label">課程代碼</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="course-code" name="course-code">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="score" class="col-form-label">成績</label>
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" id="score" name="score">
+                    </div>
+                </div>
+
+                <div class="status">
+                    <label>
+                        <input type="radio" name="status" value="進修中">
+                        進修中
+                    </label>
+                    <label>
+                        <input type="radio" name="status" value="已修課">
+                        已修課
+                    </label>
+                </div>
+
+                <div class="buttons">
+                    <button type="button" class="back-button">返回</button>
+                    <button type="submit" class="add-button">加入</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="right-panel position-absolute bottom-50 start-50 translate-middle-20">
+            <table class="table table-success table-striped">
+                <thead>
+                    <tr>
+                        <th>記錄編號</th>
+                        <th>課程代碼</th>
+                        <th>課程名稱</th>
+                        <th>成績</th>
+                        <th>修課狀態</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example rows -->
+                    <tr>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <button class="edit-button">修改</button>
+                            <button class="delete-button">刪除</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <button class="edit-button">修改</button>
+                            <button class="delete-button">刪除</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
