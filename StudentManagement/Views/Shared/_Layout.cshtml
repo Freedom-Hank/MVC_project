@@ -36,9 +36,6 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Courselist" asp-action="Index">歷屆修課列表</a>
                             </li>
                         }
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">Student</a>
-                        </li>
                     </ul>
                     <ul class="navbar-nav">
                         @if (HttpContextAccessor.HttpContext.Session.GetString("StudentName") != null)
